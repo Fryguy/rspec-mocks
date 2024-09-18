@@ -173,6 +173,7 @@ module RSpec
           @original_value = get_const_defined_on(@context, @const_name)
 
           @context.__send__(:remove_const, @const_name)
+          GC.start
         end
 
         def to_constant
@@ -207,6 +208,7 @@ module RSpec
           @constants_to_transfer = verify_constants_to_transfer!
 
           @context.__send__(:remove_const, @const_name)
+          GC.start
           @context.const_set(@const_name, @mutated_value)
 
           transfer_nested_constants
@@ -226,6 +228,7 @@ module RSpec
           end
 
           @context.__send__(:remove_const, @const_name)
+          GC.start
           @context.const_set(@const_name, @original_value)
         end
 
@@ -298,6 +301,7 @@ module RSpec
 
         def reset
           @parent.__send__(:remove_const, @const_name)
+          GC.start
         end
 
       private
